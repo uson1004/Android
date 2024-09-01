@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "android_design_patterns"
+rootProject.name = "android-design_patterns"
 include(":app")
  
