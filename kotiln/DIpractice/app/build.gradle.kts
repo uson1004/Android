@@ -47,5 +47,5 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     implementation (libs.hilt.android)
-    implementation (libs.hilt.android.compiler)
+    annotationProcessor (libs.hilt.android.compiler)
 }
