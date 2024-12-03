@@ -38,10 +38,10 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ComposePracTheme {
-                Surface (
-                    color = MaterialTheme.colorScheme.background
-                ) {
+                Column {
                     TopLevel()
+                    BrushGradient()
+                    Greeting("Android")
                 }
             }
         }
@@ -67,6 +67,24 @@ fun BrushGradient() { // wow rainbows
             brush = brush
         ),
     )
+}
+
+@Preview(showBackground = true, name = "Text preview")
+@Composable
+fun GreetingPreview() {
+    ComposePracTheme {
+        Greeting(name = "Android")
+    }
+}
+
+@Composable
+fun Greeting(name: String, modifier: Modifier = Modifier) {
+    Surface(color = MaterialTheme.colorScheme.primary) {
+        Text(
+            text = "Hello $name!",
+            modifier= modifier,
+        )
+    }
 }
 
 @Composable
