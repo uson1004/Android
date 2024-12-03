@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
@@ -39,34 +40,12 @@ class MainActivity : ComponentActivity() {
         setContent {
             ComposePracTheme {
                 Column {
-                    TopLevel()
-                    BrushGradient()
                     Greeting("Android")
+                    MyApp()
                 }
             }
         }
     }
-}
-
-@Composable
-fun BrushGradient() { // wow rainbows
-    val rainbowColors: List<Color> = listOf(
-        Color.Red,
-        Color.Yellow,
-        Color.Green,
-        Color.Blue,
-    )
-    var text by remember { mutableStateOf("") }
-    val brush = remember {
-        Brush.linearGradient(
-            colors = rainbowColors
-        )
-    }
-    TextField(
-        value = text, onValueChange = {text = it}, textStyle = androidx.compose.ui.text.TextStyle(
-            brush = brush
-        ),
-    )
 }
 
 @Preview(showBackground = true, name = "Text preview")
@@ -78,12 +57,27 @@ fun GreetingPreview() {
 }
 
 @Composable
+fun MyApp(
+    modifier: Modifier = Modifier,
+    names: List<String> = listOf("World", "Compose")
+) {
+    Column (modifier = modifier.padding(vertical = 4.dp)) {
+        for (name in names) {
+            Greeting(name = name)
+        }
+    }
+}
+
+@Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Surface(color = MaterialTheme.colorScheme.primary) {
-        Text(
-            text = "Hello $name!",
-            modifier= modifier,
-        )
+    Surface(
+        color = MaterialTheme.colorScheme.primary,
+        modifier = modifier.padding(vertical = 4.dp, horizontal = 8.dp)
+    ) {
+        Column(modifier = Modifier.fillMaxWidth().padding(24.dp)) {
+            Text(text = "Hello")
+            Text(text = name)
+        }
     }
 }
 
@@ -113,4 +107,25 @@ fun TopLevel() { // crud
             }
         }
     }
+}
+
+@Composable
+fun BrushGradient() { // wow rainbows
+    val rainbowColors: List<Color> = listOf(
+        Color.Red,
+        Color.Yellow,
+        Color.Green,
+        Color.Blue,
+    )
+    var text by remember { mutableStateOf("") }
+    val brush = remember {
+        Brush.linearGradient(
+            colors = rainbowColors
+        )
+    }
+    TextField(
+        value = text, onValueChange = {text = it}, textStyle = androidx.compose.ui.text.TextStyle(
+            brush = brush
+        ),
+    )
 }
