@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
@@ -32,6 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.composeprac.ui.theme.ComposePracTheme
 import java.time.format.TextStyle
+import kotlin.math.exp
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,62 +72,77 @@ fun MyApp(
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
+    val expanded = remember { mutableStateOf(false) }
+
+    val extraPadding = if (expanded.value) 48.dp else 0.dp
+
     Surface(
         color = MaterialTheme.colorScheme.primary,
         modifier = modifier.padding(vertical = 4.dp, horizontal = 8.dp)
     ) {
-        Column(modifier = Modifier.fillMaxWidth().padding(24.dp)) {
-            Text(text = "Hello")
-            Text(text = name)
-        }
-    }
-}
-
-@Composable
-fun TopLevel() { // crud
-    var text by remember { mutableStateOf("") }
-
-    val todoList = remember { mutableStateListOf<TodoData>() }
-
-    val onSubmit: (String) -> Unit = { text ->
-        val key = (todoList.lastOrNull()?.key ?: 0) + 1
-        todoList.add(TodoData(key, text))
-    }
-
-    Column {
-        Row(modifier = Modifier.padding(8.dp)) {
-            OutlinedTextField(
-                value = text,
-                onValueChange = { text = it},
-                modifier = Modifier.weight(1f),
-            )
-
-            Spacer(modifier = Modifier.size(8.dp))
-
-            Button(onClick = { onSubmit(text) }) {
-                Text("입력")
+        Row(modifier= Modifier.padding(24.dp)) {
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(bottom = extraPadding)
+            ) {
+                Text(text = "Hello")
+                Text(text = name)
+            }
+            ElevatedButton(
+                onClick = { expanded.value = !expanded.value }
+            ) {
+                Text(if(expanded.value) "Show less" else "Show more")
             }
         }
     }
 }
 
-@Composable
-fun BrushGradient() { // wow rainbows
-    val rainbowColors: List<Color> = listOf(
-        Color.Red,
-        Color.Yellow,
-        Color.Green,
-        Color.Blue,
-    )
-    var text by remember { mutableStateOf("") }
-    val brush = remember {
-        Brush.linearGradient(
-            colors = rainbowColors
-        )
-    }
-    TextField(
-        value = text, onValueChange = {text = it}, textStyle = androidx.compose.ui.text.TextStyle(
-            brush = brush
-        ),
-    )
-}
+//@Composable
+//fun TopLevel() { // crud
+//    var text by remember { mutableStateOf("") }
+//
+//    val todoList = remember { mutableStateListOf<TodoData>() }
+//
+//    val onSubmit: (String) -> Unit = { text ->
+//        val key = (todoList.lastOrNull()?.key ?: 0) + 1
+//        todoList.add(TodoData(key, text))
+//    }
+//
+//    Column {
+//        Row(modifier = Modifier.padding(8.dp)) {
+//            OutlinedTextField(
+//                value = text,
+//                onValueChange = { text = it},
+//                modifier = Modifier.weight(1f),
+//            )
+//
+//            Spacer(modifier = Modifier.size(8.dp))
+//
+//            Button(onClick = { onSubmit(text) }) {
+//                Text("입력")
+//            }
+//        }
+//    }
+//}
+//
+//@Composable
+//fun BrushGradient() { // wow rainbows
+//    val rainbowColors: List<Color> = listOf(
+//        Color.Red,
+//        Color.Yellow,
+//        Color.Green,
+//        Color.Blue,
+//    )
+//    var text by remember { mutableStateOf("") }
+//    val brush = remember {
+//        Brush.linearGradient(
+//            colors = rainbowColors
+//        )
+//    }
+//    TextField(
+//        value = text, onValueChange = {text = it}, textStyle = androidx.compose.ui.text.TextStyle(
+//            brush = brush
+//        ),
+//    )
+//}
