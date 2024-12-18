@@ -51,7 +51,9 @@ fun WaterCounter(modifier: Modifier = Modifier) {
                 WellnessTaskItem(
                     onClose = { showTask = false },
                     taskName = "Have you taken your 15 minute walk today?",
-                    modifier = modifier.padding(top = 8.dp)
+                    modifier = modifier.padding(top = 8.dp),
+                    checked = false,
+                    onCheckedChange = {},
                 )
             }
             Text(text = "You've had $count glasses.")
@@ -95,5 +97,4 @@ fun StatefulCounter(modifier: Modifier = Modifier) {
 
     StatelessCounter(count, { count++ }, modifier)
     StatelessCounter(count2, { count2++ }, modifier)
-    
 }
